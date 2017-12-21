@@ -121,7 +121,6 @@ describe('SUGGEST', () => {
 
       trie.select("pizzeria");
       expect(trie.suggest("piz")).to.deep.equal(["pizzeria","pize", "pizza", "pizzicato", "pizzle"]);
-
     })
   })
 
@@ -133,10 +132,9 @@ describe('SUGGEST', () => {
       trie.suggest("piz");
 
       expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]);
-      
+
       trie.delete("pizzle");
       expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato"]);
-
     })
   })
 });
