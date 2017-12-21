@@ -107,4 +107,16 @@ describe('SUGGEST', () => {
 
     })
   })
+
+  describe('DELETE', () => {
+    it('should be able to delete a suggestion', () => {
+      let trie = new Trie();
+      trie.populate();
+      trie.suggest("piz");
+      expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]);
+      trie.delete("pizzle");
+      expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato"]);
+
+    })
+  })
 });
