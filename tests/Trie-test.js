@@ -12,7 +12,7 @@ describe('Trie', () => {
     expect(completion, new Trie());
   })
 
-  it('should count letters in base case', function() {
+  it('should count words in base case', function() {
     let word = new Trie();
     word.insert("a");
     expect(word.length).to.equal(1);
@@ -27,6 +27,7 @@ describe('Trie', () => {
   it('should count letters in recursive case', function() {
     let word = new Trie();
     word.insert("am");
+    word.insert("hello");
     expect(word.length).to.equal(2);
   })
 
@@ -49,7 +50,7 @@ describe('Trie', () => {
     let wordTrie = new Trie();
     wordTrie.insert("pizza");
     wordTrie.insert("hi")
-    console.log( JSON.stringify(wordTrie, null, 4) );
+    // console.log( JSON.stringify(wordTrie, null, 4) );
     expect(wordTrie.head.children.p.data).to.deep.equal('p');
     expect(wordTrie.head.children.p.children.i.data).to.deep.equal('i');
     expect(wordTrie.head.children.p.children.i.children.z.data).to.deep.equal('z');
@@ -84,4 +85,26 @@ describe('SUGGEST', () => {
 
     expect(trie.suggest('!')).to.deep.equal([]);
   });
+
+
+  describe('POPULATE', () => {
+    it('should have a large word count', () =>{
+      let trie = new Trie();
+      trie.populate();
+      expect(trie.length).to.equal(235886);
+      expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]);
+    })
+  })
+
+  describe('SELECT', () => {
+    it('should be able to sort selections', () => {
+      let trie = new Trie();
+      trie.populate();
+      trie.suggest("piz");
+      expect(trie.suggest("piz")).to.deep.equal(["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]);
+      trie.select("pizzeria");
+      expect(trie.suggest("piz")).to.deep.equal(["pizzeria","pize", "pizza", "pizzicato", "pizzle"]);
+
+    })
+  })
 });
